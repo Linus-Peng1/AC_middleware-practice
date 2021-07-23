@@ -1,5 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
+const moment = require('moment')
+
 const app = express()
 const port = 3000
 
@@ -34,7 +36,7 @@ app.listen(port, () => {
 
 function logger(req, res, next) {
   const timeStart = Date.now()
-  const localTime = timeStart.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
+  const localTime = moment(timeStart).format('YYYY-MM-DD HH:mm:ss')
   const method = req.method
   const url = req.originalUrl
 
