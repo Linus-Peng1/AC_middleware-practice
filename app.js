@@ -1,27 +1,31 @@
 const express = require('express')
+const exphbs = require('express-handlebars')
 const app = express()
 const port = 3000
+
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', 'hbs')
 
 app.use(logger)
 
 app.get('/', (req, res) => {
-  console.log('home')
-  res.send('列出全部 Todo')
+  // res.send('列出全部 Todo')
+  res.render('index', { content: '列出全部 Todo' })
 })
 
 app.get('/new', (req, res) => {
-  console.log('new')
-  res.send('新增 Todo 頁面')
+  // res.send('新增 Todo 頁面')
+  res.render('index', { content: '新增 Todo 頁面' })
 })
 
 app.get('/:id', (req, res) => {
-  console.log('show')
-  res.send('顯示一筆 Todo')
+  // res.send('顯示一筆 Todo')
+  res.render('index', { content: '顯示一筆 Todo' })
 })
 
 app.post('/', (req, res) => {
-  console.log('add new')
-  res.send('新增一筆  Todo')
+  // res.send('新增一筆  Todo')
+  res.redirect('/')
 })
 
 app.listen(port, () => {
@@ -29,7 +33,6 @@ app.listen(port, () => {
 })
 
 function logger(req, res, next) {
-  console.log('START')
   const timeStart = Date.now()
   const localTime = timeStart.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' })
   const method = req.method
@@ -39,7 +42,6 @@ function logger(req, res, next) {
     const timeEnd = Date.now()
     const totalTime = (timeEnd - timeStart)
     console.log(`${localTime} | ${method} from ${url} | total time: ${totalTime}ms`)
-    console.log('END')
   })
   next()
 }
